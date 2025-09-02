@@ -23,11 +23,14 @@ import { provideHttpClient} from '@angular/common/http';
     RouterLink,
     RouterOutlet,
     CartModule,
-    InMemoryWebApiModule.forRoot(AppData, { delay: 1000 }),
     FormsModule
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(),
+    importProvidersFrom(
+      FormsModule,
+      InMemoryWebApiModule.forRoot(AppData, { delay: 1000 })
+    ),
   ],
   bootstrap: [AppComponent]
 })
