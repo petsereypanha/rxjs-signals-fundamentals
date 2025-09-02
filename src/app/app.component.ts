@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'rxjs-signals';
+  // Just enough here for the template to compile
+  pageTitle = 'Acme Product Management';
+
+  cartCount = 0;
 }
