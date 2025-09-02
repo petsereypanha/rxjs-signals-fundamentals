@@ -1,6 +1,6 @@
 import {Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Product} from '../../product';
-import {Subscription} from 'rxjs';
+import {catchError, EMPTY, Subscription} from 'rxjs';
 import {ProductService} from '../../services/product.service';
 
 @Component({
@@ -28,12 +28,18 @@ export class ProductDetailComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes:SimpleChanges): void {
     const id = changes['productId'].currentValue;
     if (id) {
-      this.sub = this.productsService.getProduct(id).subscribe({
-        next: product => {
-          this.product = product;
-          this.pageTitle = `Product Detail for: ${this.product.productName}`;
+      this.sub = this.productsService.getProduct(id)
+        .pipe(
+          catchError(err => {
+            this.errorMessage = err;
+            return EMPTY;
+          })
+        )
+        .subscribe({
+          next: product => {
+            this.product = product;
+            this.pageTitle = `Product Detail for: ${this.product.productName}`;
         },
-        error: err => this.errorMessage = err
       });
     }
   }
