@@ -16,7 +16,7 @@ export class ProductListComponent {
 
   private productsService = inject(ProductService);
 
-  readonly products$ = this.productsService.product$
+  readonly products$ = this.productsService.products$
     .pipe(
       catchError(err => {
         this.errorMessage = err;
@@ -26,10 +26,10 @@ export class ProductListComponent {
 
 
   // Selected product id to highlight the entry
-  selectedProductId: number = 0;
+  readonly selectedProductId$ = this.productsService.productSelectedAction$;
 
   onSelected(productId: number): void {
-    this.selectedProductId = productId;
+      this.productsService.selectedProductChanged(productId);
   }
 }
 //
