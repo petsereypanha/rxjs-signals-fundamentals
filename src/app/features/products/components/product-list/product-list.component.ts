@@ -8,7 +8,7 @@ import {catchError, EMPTY, Subscription, tap} from 'rxjs';
     templateUrl: './product-list.component.html',
     standalone: false,
 })
-export class ProductListComponent implements OnInit , OnDestroy{
+export class ProductListComponent {
   // Just enough here for the template to compile
   pageTitle = 'Products';
   errorMessage = '';
@@ -16,30 +16,20 @@ export class ProductListComponent implements OnInit , OnDestroy{
 
   private productsService = inject(ProductService);
 
-  // Products
-  products: Product[] = [];
+  readonly products$ = this.productsService.product$
+    .pipe(
+      catchError(err => {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    )
+
 
   // Selected product id to highlight the entry
   selectedProductId: number = 0;
 
   onSelected(productId: number): void {
     this.selectedProductId = productId;
-  }
-  ngOnInit(): void {
-    this.sub = this.productsService.getProducts()
-      .pipe(
-        tap(() => console.info('In component pipeline')),
-        catchError(err => {
-          this.errorMessage = err;
-          return EMPTY;
-        })
-      )
-      .subscribe({
-      next: products => this.products = products,
-    });
-  }
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 }
 //

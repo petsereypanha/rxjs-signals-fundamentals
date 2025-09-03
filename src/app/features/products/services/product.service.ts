@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, map, Observable, of, switchMap, tap, throwError} from 'rxjs';
+import {catchError, map, Observable, of, shareReplay, switchMap, tap, throwError} from 'rxjs';
 import {Product} from '../product';
 import {ProductData} from '../product-data';
 import {HttpErrorService} from '../../../utilities/http-error.service';
@@ -15,13 +15,13 @@ export class ProductService {
   private errorService = inject(HttpErrorService);
   private reviewService = inject(ReviewService);
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
-      .pipe(
-        tap(() => console.info('In http.get pipeline')),
-        catchError(err => this.handleError(err))
-      );
-  }
+  readonly product$ = this.http.get<Product[]>(this.productsUrl)
+    .pipe(
+      tap(p => console.info(JSON.stringify(p))),
+      shareReplay(1),
+      catchError(err => this.handleError(err))
+    );
+
 
   getProduct(id: number): Observable<Product> {
     const url = `${this.productsUrl}/${id}`;

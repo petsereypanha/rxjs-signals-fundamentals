@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {CommonModule, CurrencyPipe, NgClass, NgFor, NgIf} from '@angular/common';
+import {AsyncPipe, CommonModule, CurrencyPipe, NgClass, NgFor, NgIf} from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import {ProductListComponent} from './components/product-list/product-list.component';
@@ -19,7 +19,8 @@ import {ProductDetailComponent} from './components/product-detail/product-detail
     NgFor,
     NgIf,
     NgClass,
-    CurrencyPipe
+    CurrencyPipe,
+    AsyncPipe
   ]
 })
 export class ProductsModule { }
