@@ -11,22 +11,14 @@ import {catchError, EMPTY, Subscription, tap} from 'rxjs';
 export class ProductListComponent {
   // Just enough here for the template to compile
   pageTitle = 'Products';
-  errorMessage = '';
-  sub!: Subscription;
 
   private productsService = inject(ProductService);
 
-  readonly products$ = this.productsService.products$
-    .pipe(
-      catchError(err => {
-        this.errorMessage = err;
-        return EMPTY;
-      })
-    )
-
+  products = this.productsService.products;
+  errorMessage = this.productsService.productsError;
 
   // Selected product id to highlight the entry
-  readonly selectedProductId$ = this.productsService.productSelectedAction$;
+  selectedProductId = this.productsService.selectedProductId;
 
   onSelected(productId: number): void {
       this.productsService.selectedProductChanged(productId);
