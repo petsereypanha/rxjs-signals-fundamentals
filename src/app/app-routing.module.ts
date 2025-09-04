@@ -8,7 +8,7 @@ import {CartShellComponent} from './features/cart/cart-shell/cart-shell.componen
 const routes: Routes = [
   { path: 'welcome', component: HomeComponent },
   { path: 'products', component: ProductListComponent },
-  { path: 'products', component: CartShellComponent },
+  { path: 'cart', component: CartShellComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }];
 

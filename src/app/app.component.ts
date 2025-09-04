@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {CartService} from './features/cart/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  // Just enough here for the template to compile
   pageTitle = 'Acme Product Management';
 
-  cartCount = 0;
+  private cartService = inject(CartService);
+
+  cartCount = this.cartService.cartCount;
 }

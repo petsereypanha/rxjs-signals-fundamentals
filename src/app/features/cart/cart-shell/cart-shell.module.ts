@@ -16,10 +16,7 @@ import {CartListModule} from '../cart-list/cart-list.module';
     CommonModule,
     CartListModule,
     CartTotalModule,
-    CurrencyPipe,
     FormsModule,
-    NgFor,
-    NgIf,
   ],
   exports: [
     CartShellComponent

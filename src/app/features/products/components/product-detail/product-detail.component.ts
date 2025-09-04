@@ -2,6 +2,7 @@ import {Component, inject, Input} from '@angular/core';
 import {Product} from '../../product';
 import {catchError, EMPTY, Subscription} from 'rxjs';
 import {ProductService} from '../../services/product.service';
+import {CartService} from '../../../cart/cart.service';
 
 @Component({
     selector: 'app-product-detail',
@@ -15,7 +16,7 @@ export class ProductDetailComponent {
   sub!: Subscription;
 
   private productsService = inject(ProductService);
-
+  private cartService = inject(CartService);
 
   // Product to display
   product$ = this.productsService.product$
@@ -30,6 +31,6 @@ export class ProductDetailComponent {
   pageTitle =  'Product Detail';
 
   addToCart(product: Product) {
-    console.log(`Adding to cart: ${product.productName}`);
+    this.cartService.addToCart(product);
   }
 }
